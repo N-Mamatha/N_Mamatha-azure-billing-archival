@@ -1,0 +1,7 @@
+Client/API → Azure Function Proxy
+
+Cosmos DB (Hot Tier)
+
+Blob Storage (Cold Tier)
+
+Arrows showing data flow for read/write and archival
