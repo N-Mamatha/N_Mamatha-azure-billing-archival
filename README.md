@@ -1,40 +1,22 @@
-# N_Mamatha-azure-billing-archival
-Cost optimization for azure cosmos DB billing records
-# Azure Billing Archival - Cost Optimization Challenge
+# Azure Billing Archival – Cost Optimization Challenge
 
-## Problem Statement
+## Overview
+This solution implements a tiered storage architecture to reduce costs in a read-heavy Azure serverless system using Cosmos DB and Blob Storage.
 
-We're using Azure Cosmos DB to store billing records in a serverless system. The database is read-heavy, with over 2 million records (300KB each), and records older than 3 months are rarely accessed — causing high storage and RU/s costs.
+## Architecture
+- **Hot Tier**: Azure Cosmos DB for recent billing records
+- **Cold Tier**: Azure Blob Storage (Archive Tier) for records older than 3 months
+- **Azure Functions**: Handle archival and retrieval seamlessly
 
-## Solution Overview
+![Architecture Diagram](docs/architecture.png)
 
-We propose a **hybrid storage solution**:
+## Features
+- Zero downtime
+- No changes to API contracts
+- Simple deployment
+- Cost-efficient storage
 
-- **Hot Data** (< 3 months): stays in **Cosmos DB**
-- **Cold Data** (> 3 months): archived to **Azure Blob Storage**
-- Azure Function reads from Cosmos DB; if not found, falls back to Blob Storage.
-- Archival is managed by **Durable Function**, running daily.
-
-### Architecture Diagram
-
-![Architecture Diagram](diagrams/architecture.png)
-
-## Benefits
-
-✅ Cost-efficient (Blob storage is cheaper)  
-✅ No API changes needed  
-✅ No downtime  
-✅ Data is always available
-
-## Files & Folders
-
-- `/functions/`: Durable Function pseudocode for archival
-- `/scripts/`: Retrieval logic + fallback read script
-- `/diagrams/`: Architecture PNG (upload separately)
-- `chatgpt_conversation.pdf`: Full AI conversation exported
-
-## Future Improvements
-
-- Add query indexing via Azure Data Lake
-- Implement metadata tagging in Blob for faster search
-- Integrate Application Insights for telemetry
+## Files
+- `functions/`: Azure Functions for archival and retrieval
+- `infra/`: Optional Bicep file for provisioning resources
+- `conversation/`: Copilot chat transcript
